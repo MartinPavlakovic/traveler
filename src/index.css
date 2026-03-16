@@ -1,1 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+@theme {
+  --color-lemon: #faf1c8;
+  --color-aqua: #83d8d2;
+  --color-peach: #ffc2aa;
+  --color-cherry: #feadb9;
+  --font-roboto: 'Roboto', sans-serif;
+}
