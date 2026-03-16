@@ -24,7 +24,7 @@ export default function Nav() {
       variants={navigation}
       initial="hidden"
       animate="visible"
-      className={`flex justify-between align-center w-full font-bold text-lg font-roboto ${isHomePage ? 'text-black' : 'text-white'} p-8 fixed z-2`}>
+      className={`flex justify-between align-center w-full font-bold text-lg font-roboto ${isHomePage ? 'text-white' : 'text-black'} p-8 fixed z-2`}>
       {/* Left nav links */}
       <div>
         <MotionLink to="/" variants={navigationItem}>
