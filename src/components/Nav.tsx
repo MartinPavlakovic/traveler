@@ -38,59 +38,63 @@ export default function Nav() {
   const isLightText = lightTextPages.includes(location.pathname);
 
   return (
-    <motion.nav
-      variants={navigation}
-      initial="hidden"
-      animate="visible"
-      className={`flex justify-between align-center w-full font-bold text-lg font-roboto ${isLightText ? 'text-white' : 'text-black'} p-8 fixed z-2`}>
-      {/* Left nav links */}
-      <>
+    !loading && (
+      <motion.nav
+        variants={navigation}
+        initial="hidden"
+        animate="visible"
+        className={`flex justify-between items-center w-full font-bold text-lg font-roboto ${
+          isLightText ? 'text-white' : 'text-black'
+        } p-8 fixed z-2`}>
+        {/* Left nav links */}
         <MotionLink to="/" variants={navigationItem}>
           ko task na praks
         </MotionLink>
-      </>
-      {/* Middle nav links*/}
-      <div className="flex gap-12">
-        {middleLinks.map(link => (
-          <MotionLink
-            key={link.name}
-            to={link.path}
-            variants={navigationItem}
-            className="relative">
-            {link.name}
-            <ButtonLine />
-          </MotionLink>
-        ))}
-      </div>
-      {/* Right nav links */}
-      <div className="flex gap-8 mr-8">
-        {!loading && !user ? (
-          <>
+
+        {/* Middle nav links */}
+        <motion.div className="flex gap-12">
+          {middleLinks.map(link => (
             <MotionLink
-              to="/login"
+              key={link.name}
+              to={link.path}
               variants={navigationItem}
               className="relative">
-              LOG IN
+              {link.name}
               <ButtonLine />
             </MotionLink>
-            <MotionLink
-              to="/register"
+          ))}
+        </motion.div>
+
+        {/* Right nav links */}
+        <motion.div className="flex gap-8 mr-8">
+          {user ? (
+            <motion.button
+              onClick={handleLogout}
               variants={navigationItem}
-              className="relative">
-              SIGN UP
+              className="relative cursor-pointer bg-transparent border-none">
+              LOG OUT
               <ButtonLine />
-            </MotionLink>
-          </>
-        ) : !loading && user ? (
-          <motion.button
-            onClick={handleLogout}
-            variants={navigationItem}
-            className="relative cursor-pointer bg-transparent border-none">
-            LOG OUT
-            <ButtonLine />
-          </motion.button>
-        ) : null}
-      </div>
-    </motion.nav>
+            </motion.button>
+          ) : (
+            <>
+              <MotionLink
+                to="/login"
+                variants={navigationItem}
+                className="relative">
+                LOG IN
+                <ButtonLine />
+              </MotionLink>
+              <MotionLink
+                to="/register"
+                variants={navigationItem}
+                className="relative">
+                SIGN UP
+                <ButtonLine />
+              </MotionLink>
+            </>
+          )}
+        </motion.div>
+      </motion.nav>
+    )
   );
 }
