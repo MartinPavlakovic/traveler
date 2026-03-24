@@ -2,18 +2,24 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import Background from '../components/Background';
+import GoogleIcon from '../components/GoogleIcon';
 import { buttonAnim, MotionLink } from '../utils/animation';
-import { auth } from '../firebase/config';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '../firebase/config';
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
-
   const handleLogin = async (e: React.SubmitEvent) => {
     e.preventDefault();
+    if (!email || !password) return;
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -25,6 +31,32 @@ export default function Login() {
       } else {
         alert('Something went wrong');
       }
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    const provider = new GoogleAuthProvider();
+
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const names = user.displayName?.split(' ');
+      const firstName = names?.[0];
+      const lastName = names?.[1];
+      const userRef = doc(db, 'users', user.uid);
+
+      await setDoc(
+        userRef,
+        {
+          uid: user.uid,
+          email: user.email,
+          firstName: firstName,
+          lastName: lastName,
+        },
+        { merge: true },
+      );
+    } catch (err: any) {
+      alert(err.message);
     }
   };
 
@@ -50,7 +82,6 @@ export default function Login() {
             value={email}
             onChange={e => setEmail(e.target.value)}
             className="w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4"
-            required
           />
           <input
             type="password"
@@ -58,7 +89,6 @@ export default function Login() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             className="w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4"
-            required
           />
         </div>
 
@@ -67,6 +97,15 @@ export default function Login() {
           type="submit"
           className="w-full py-3 bg-linear-to-r from-aqua to-peach text-gray-800 font-semibold rounded-lg cursor-pointer mb-4">
           Login
+        </motion.button>
+
+        <motion.button
+          {...buttonAnim}
+          type="submit"
+          onClick={handleGoogleLogin}
+          className="w-full py-3 bg-white text-gray-800 border font-semibold rounded-lg cursor-pointer mb-4 flex items-center justify-center">
+          <GoogleIcon />
+          Sign up with google
         </motion.button>
 
         <MotionLink

@@ -4,7 +4,7 @@ import { buttonAnim, MotionLink } from '../utils/animation';
 import { setDoc, doc } from 'firebase/firestore';
 import { db, auth } from '../firebase/config';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
@@ -16,16 +16,13 @@ export default function Register() {
     password: '',
   });
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-      setUser(prev => ({
-        ...prev,
-        [name]: value,
-      }));
-    },
-    [],
-  );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleRegister = async (e: React.SubmitEvent) => {
     e.preventDefault();
