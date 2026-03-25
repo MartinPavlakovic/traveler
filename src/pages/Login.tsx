@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import Background from '../components/Background';
 import GoogleIcon from '../components/GoogleIcon';
@@ -11,19 +11,22 @@ import {
   signInWithPopup,
 } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
+import { useAuth } from '../context/AuthContext';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const { user } = useAuth();
   const navigate = useNavigate();
+
+  if (user) return <Navigate to="/" />;
+
   const handleLogin = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!email || !password) return;
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log('Logged in successfully!');
       navigate('/');
     } catch (err: any) {
       if (err.code === 'auth/invalid-credential') {
@@ -38,11 +41,9 @@ export default function Login() {
     const provider = new GoogleAuthProvider();
 
     try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const names = user.displayName?.split(' ');
-      const firstName = names?.[0];
-      const lastName = names?.[1];
+      const { user } = await signInWithPopup(auth, provider);
+      const [firstName = '', ...rest] = user.displayName?.split(' ') || [];
+      const lastName = rest.join(' ');
       const userRef = doc(db, 'users', user.uid);
 
       await setDoc(
@@ -55,8 +56,11 @@ export default function Login() {
         },
         { merge: true },
       );
+      navigate('/');
     } catch (err: any) {
-      alert(err.message);
+      if (err.code !== 'auth/popup-closed-by-user') {
+        alert(err.message);
+      }
     }
   };
 
