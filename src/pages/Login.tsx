@@ -16,9 +16,10 @@ import { useAuth } from '../context/AuthContext';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
+  if (loading) return null;
   if (user) return <Navigate to="/" />;
 
   const handleLogin = async (e: React.SubmitEvent) => {

@@ -9,14 +9,16 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export default function Register() {
-  const { user: authUser } = useAuth();
+  const { user: authUser, loading } = useAuth();
   const navigate = useNavigate();
   const [user, setUser] = useState<UserData>({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
+    profileImageURL: '',
   });
+  if (loading) return null;
   if (authUser) return <Navigate to="/" />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
