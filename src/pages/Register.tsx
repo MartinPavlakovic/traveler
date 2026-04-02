@@ -19,7 +19,7 @@ export default function Register() {
     profileImageURL: '',
   });
   if (loading) return null;
-  if (authUser) return <Navigate to="/" />;
+  if (authUser) return <Navigate to='/' />;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,54 +50,54 @@ export default function Register() {
 
   return (
     <>
-      <div className="relative w-full h-screen overflow-hidden flex items-center justify-center">
+      <div className='relative w-full h-screen overflow-hidden flex items-center justify-center'>
         <Background />
         <motion.form
           onSubmit={handleRegister}
-          className="w-full max-w-md px-6 py-10 bg-white rounded-xl"
+          className='w-full max-w-md px-6 py-10 bg-white rounded-xl'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, transition: { delay: 0.5 } }}>
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <div className='mb-8'>
+            <h1 className='text-3xl font-bold text-gray-800 mb-2'>
               Welcome to our website
             </h1>
-            <p className="text-gray-500">Register your account</p>
+            <p className='text-gray-500'>Register your account</p>
           </div>
 
-          <div className="mb-6">
+          <div className='mb-6'>
             <input
               required
-              type="text"
-              name="firstName"
-              placeholder="First name"
-              className="w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4"
+              type='text'
+              name='firstName'
+              placeholder='First name'
+              className='w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4'
               value={user.firstName}
               onChange={handleInputChange}
             />
             <input
               required
-              type="text"
-              name="lastName"
-              placeholder="Last name"
-              className="w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4"
+              type='text'
+              name='lastName'
+              placeholder='Last name'
+              className='w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4'
               value={user.lastName}
               onChange={handleInputChange}
             />
             <input
               required
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4"
+              type='email'
+              name='email'
+              placeholder='Email'
+              className='w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4'
               value={user.email}
               onChange={handleInputChange}
             />
             <input
               required
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4"
+              type='password'
+              name='password'
+              placeholder='Password'
+              className='w-full px-4 py-3 border border-gray-300 hover:border-aqua focus:border-aqua focus:outline-none rounded-lg mb-4'
               value={user.password}
               onChange={handleInputChange}
             />
@@ -105,15 +105,15 @@ export default function Register() {
 
           <motion.button
             {...buttonAnim}
-            type="submit"
-            className="w-full py-3 bg-linear-to-l from-aqua to-peach text-gray-800 font-semibold rounded-lg cursor-pointer mb-4">
+            type='submit'
+            className='w-full py-3 bg-linear-to-l from-aqua to-peach text-gray-800 font-semibold rounded-lg cursor-pointer mb-4'>
             Register
           </motion.button>
 
           <MotionLink
             {...buttonAnim}
-            to="/login"
-            className="block py-2 text-gray-600 font-medium cursor-pointer text-center">
+            to='/login'
+            className='block py-2 text-gray-600 font-medium cursor-pointer text-center'>
             Oops, I already have an account. Log in
           </MotionLink>
         </motion.form>

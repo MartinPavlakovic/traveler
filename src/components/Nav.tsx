@@ -44,23 +44,23 @@ export default function Nav() {
     <motion.nav
       variants={loading ? {} : navigation}
       initial={loading ? 'visible' : 'hidden'}
-      animate="visible"
+      animate='visible'
       className={`flex justify-between items-center w-full font-bold text-lg font-roboto ${
         isLightText ? 'text-white' : 'text-black'
       } p-8 fixed z-2`}>
       {/* Left nav links */}
-      <MotionLink to="/" variants={navigationItem}>
+      <MotionLink to='/' variants={navigationItem}>
         ko task na praks
       </MotionLink>
 
       {/* Middle nav links */}
-      <motion.div className="flex gap-12">
+      <motion.div className='flex gap-12'>
         {availableLinks.map(link => (
           <MotionLink
             key={link.name}
             to={link.path}
             variants={navigationItem}
-            className="relative">
+            className='relative'>
             {link.name}
             <ButtonLine />
           </MotionLink>
@@ -68,28 +68,28 @@ export default function Nav() {
       </motion.div>
 
       {/* Right nav links */}
-      <motion.div className="flex gap-8 mr-8">
+      <motion.div className='flex gap-8 mr-8'>
         {user ? (
           <motion.button
             onClick={handleLogout}
             variants={navigationItem}
-            className="relative cursor-pointer bg-transparent border-none">
+            className='relative cursor-pointer bg-transparent border-none'>
             LOG OUT
             <ButtonLine />
           </motion.button>
         ) : (
           <>
             <MotionLink
-              to="/login"
+              to='/login'
               variants={navigationItem}
-              className="relative">
+              className='relative'>
               LOG IN
               <ButtonLine />
             </MotionLink>
             <MotionLink
-              to="/register"
+              to='/register'
               variants={navigationItem}
-              className="relative">
+              className='relative'>
               SIGN UP
               <ButtonLine />
             </MotionLink>
