@@ -16,11 +16,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let unsubscribeDb: (() => void) | undefined;
+
     const unsubscribeAuth = onAuthStateChanged(auth, currentUser => {
+      if (unsubscribeDb) unsubscribeDb();
+
       if (currentUser) {
         const userDocRef = doc(db, 'users', currentUser.uid);
 
-        const unsubscribeDb = onSnapshot(userDocRef, docSnap => {
+        unsubscribeDb = onSnapshot(userDocRef, docSnap => {
           if (docSnap.exists()) {
             setUser({ ...currentUser, ...docSnap.data() });
           } else {
@@ -28,15 +32,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           }
           setLoading(false);
         });
-
-        return () => unsubscribeDb();
       } else {
         setUser(null);
         setLoading(false);
       }
     });
 
-    return () => unsubscribeAuth();
+    return () => {
+      unsubscribeAuth();
+      if (unsubscribeDb) unsubscribeDb();
+    };
   }, []);
 
   return (

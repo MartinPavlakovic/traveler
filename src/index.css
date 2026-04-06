@@ -8,9 +8,5 @@ body {
 }
 
 @theme {
-  --color-lemon: #faf1c8;
-  --color-aqua: #83d8d2;
-  --color-peach: #ffc2aa;
-  --color-cherry: #feadb9;
   --font-roboto: 'Roboto', sans-serif;
 }
